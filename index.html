@@ -3,524 +3,714 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SATCORP — Concierge Operator</title>
-  <meta name="description" content="SATCORP: End-to-end concierge services spanning brand, web, systems, broadcast, and world-building. Precision delivery. Luxury execution." />
+  <title>SATCORP // CONCIERGE OPERATOR</title>
+  <meta name="description" content="SATCORP: Concierge Operator. Brand. Web. Systems. Broadcast. World-Building." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- Noise overlay -->
-  <div class="noise"></div>
+  <!-- ═══ BOOT SEQUENCE ═══ -->
+  <div class="boot-screen" id="bootScreen">
+    <div class="boot-inner">
+      <div class="boot-logo">◈ SATCORP</div>
+      <div class="boot-lines" id="bootLines"></div>
+      <div class="boot-bar-wrap"><div class="boot-bar" id="bootBar"></div></div>
+      <div class="boot-status" id="bootStatus">INITIALIZING SYSTEMS...</div>
+    </div>
+  </div>
 
-  <!-- Custom cursor -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-trail" id="cursorTrail"></div>
+  <!-- ═══ SCANLINES + CRT ═══ -->
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="crt-vignette" aria-hidden="true"></div>
+  <div class="phosphor-glow" aria-hidden="true"></div>
 
-  <!-- ═══════════ NAV ═══════════ -->
+  <!-- ═══ CURSOR ═══ -->
+  <div class="hud-cursor" id="cursor">
+    <div class="cur-h"></div>
+    <div class="cur-v"></div>
+    <div class="cur-ring"></div>
+    <div class="cur-dot"></div>
+  </div>
+
+  <!-- ═══ NAV — INSTRUMENT CLUSTER ═══ -->
   <nav id="nav">
-    <div class="nav-inner">
-      <a href="#home" class="nav-logo" data-scroll>
-        <span class="logo-mark">◆</span>
-        <span class="logo-text">SATCORP</span>
-      </a>
-      <button class="nav-toggle" id="navToggle" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#home" data-scroll>Home</a></li>
-        <li><a href="#pillars" data-scroll>Services</a></li>
-        <li><a href="#divisions" data-scroll>Divisions</a></li>
-        <li><a href="#standard" data-scroll>The Standard</a></li>
-        <li><a href="#contact" data-scroll>Contact</a></li>
+    <div class="nav-left">
+      <div class="nav-brand">
+        <span class="brand-reticle">◈</span>
+        <div class="brand-stack">
+          <span class="brand-main">SATCORP</span>
+          <span class="brand-sub">CONCIERGE OPERATOR // ONLINE</span>
+        </div>
+      </div>
+      <div class="nav-gauges">
+        <div class="gauge" data-label="SYS">
+          <div class="gauge-bar"><div class="gauge-fill" style="width:94%"></div></div>
+          <span>94%</span>
+        </div>
+        <div class="gauge" data-label="NET">
+          <div class="gauge-bar"><div class="gauge-fill" style="width:100%"></div></div>
+          <span>OK</span>
+        </div>
+        <div class="gauge" data-label="PWR">
+          <div class="gauge-bar"><div class="gauge-fill" style="width:87%"></div></div>
+          <span>87%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-center">
+      <ul class="nav-links">
+        <li><a href="#home" data-scroll><span class="link-num">01</span>HOME</a></li>
+        <li><a href="#pillars" data-scroll><span class="link-num">02</span>SERVICES</a></li>
+        <li><a href="#divisions" data-scroll><span class="link-num">03</span>DIVISIONS</a></li>
+        <li><a href="#standard" data-scroll><span class="link-num">04</span>DOCTRINE</a></li>
+        <li><a href="#contact" data-scroll><span class="link-num">05</span>ENGAGE</a></li>
       </ul>
-      <a href="#contact" class="nav-cta" data-scroll>Engage</a>
+    </div>
+
+    <div class="nav-right">
+      <div class="nav-time" id="navTime">--:--:--</div>
+      <div class="nav-coords">
+        <span>LAT <em>satcorp.io</em></span>
+      </div>
+      <a href="#contact" class="nav-engage" data-scroll>▶ ENGAGE</a>
+    </div>
+
+    <button class="nav-toggle" id="navToggle">☰</button>
+    <div class="nav-mobile" id="navMobile">
+      <a href="#home" data-scroll>01 HOME</a>
+      <a href="#pillars" data-scroll>02 SERVICES</a>
+      <a href="#divisions" data-scroll>03 DIVISIONS</a>
+      <a href="#standard" data-scroll>04 DOCTRINE</a>
+      <a href="#contact" data-scroll>05 ENGAGE</a>
     </div>
   </nav>
 
-  <!-- ═══════════ HERO ═══════════ -->
+  <!-- ══════════════════════════════════════
+       HERO — MAIN COCKPIT DISPLAY
+  ══════════════════════════════════════ -->
   <section id="home" class="hero">
-    <div class="hero-bg">
-      <div class="hero-grid"></div>
-      <div class="hero-vignette"></div>
-    </div>
 
-    <div class="hero-content">
-      <p class="hero-eyebrow reveal">
-        <span class="eyebrow-line"></span>
-        Concierge Operator · satcorp.io
-        <span class="eyebrow-line"></span>
-      </p>
-      <h1 class="hero-title reveal delay-1">
-        The Empire<br />
-        <em>Executes.</em>
-      </h1>
-      <p class="hero-sub reveal delay-2">End-to-end creative and technical services — delivered with the precision of a command center and the polish of a private concierge.</p>
-      <div class="hero-actions reveal delay-3">
-        <a href="#pillars" class="btn-gold" data-scroll>View Services</a>
-        <a href="#divisions" class="btn-ghost" data-scroll>Meet the Divisions</a>
+    <!-- Corner brackets -->
+    <div class="hud-bracket top-left"></div>
+    <div class="hud-bracket top-right"></div>
+    <div class="hud-bracket bot-left"></div>
+    <div class="hud-bracket bot-right"></div>
+
+    <!-- Side panels -->
+    <div class="hero-left-panel">
+      <div class="panel-label">// OPERATOR STATUS</div>
+      <div class="status-readout">
+        <div class="ro-row"><span class="ro-key">UNIT</span><span class="ro-val flicker">ANU</span></div>
+        <div class="ro-row"><span class="ro-key">BRANCH</span><span class="ro-val">SATCORP</span></div>
+        <div class="ro-row"><span class="ro-key">STATUS</span><span class="ro-val blink-green">● ACTIVE</span></div>
+        <div class="ro-row"><span class="ro-key">CLIENTS</span><span class="ro-val">OPEN</span></div>
+        <div class="ro-row"><span class="ro-key">RESPONSE</span><span class="ro-val">&lt; 24H</span></div>
+      </div>
+      <div class="radar-wrap">
+        <div class="panel-label" style="margin-bottom:12px">// RADAR</div>
+        <div class="radar" id="radar">
+          <div class="radar-ring r1"></div>
+          <div class="radar-ring r2"></div>
+          <div class="radar-ring r3"></div>
+          <div class="radar-cross-h"></div>
+          <div class="radar-cross-v"></div>
+          <div class="radar-sweep"></div>
+          <div class="radar-dot" style="top:32%;left:58%"></div>
+          <div class="radar-dot" style="top:65%;left:30%"></div>
+          <div class="radar-dot" style="top:48%;left:75%"></div>
+          <div class="radar-dot" style="top:20%;left:42%"></div>
+        </div>
       </div>
     </div>
 
-    <div class="hero-marquee">
-      <div class="marquee-track">
-        <span>ANU</span><span>·</span>
-        <span>Ki-Ra Studios</span><span>·</span>
-        <span>KYRAX</span><span>·</span>
-        <span>PULSΞ</span><span>·</span>
-        <span>SATCORP</span><span>·</span>
-        <span>ANU</span><span>·</span>
-        <span>Ki-Ra Studios</span><span>·</span>
-        <span>KYRAX</span><span>·</span>
-        <span>PULSΞ</span><span>·</span>
-        <span>SATCORP</span><span>·</span>
-        <span>ANU</span><span>·</span>
-        <span>Ki-Ra Studios</span><span>·</span>
-        <span>KYRAX</span><span>·</span>
-        <span>PULSΞ</span><span>·</span>
-        <span>SATCORP</span><span>·</span>
+    <!-- Center HUD -->
+    <div class="hero-center">
+      <div class="targeting-reticle">
+        <div class="ret-outer"></div>
+        <div class="ret-mid"></div>
+        <div class="ret-inner"></div>
+        <div class="ret-cross-h"></div>
+        <div class="ret-cross-v"></div>
+        <div class="ret-corner tl"></div>
+        <div class="ret-corner tr"></div>
+        <div class="ret-corner bl"></div>
+        <div class="ret-corner br"></div>
+      </div>
+
+      <div class="hero-text">
+        <div class="hero-callsign">CALLSIGN: <span class="flicker">SATCORP-01</span></div>
+        <h1 class="hero-title">
+          <span class="ht-line1">CONCIERGE</span>
+          <span class="ht-line2">EMPIRE</span>
+        </h1>
+        <div class="hero-tagline">// END-TO-END OPERATOR · BRAND · WEB · SYSTEMS · BROADCAST · WORLD-BUILDING</div>
+        <div class="hero-actions">
+          <a href="#pillars" class="btn-hud" data-scroll>
+            <span class="btn-bracket">[</span>
+            DEPLOY SERVICES
+            <span class="btn-bracket">]</span>
+          </a>
+          <a href="#contact" class="btn-hud btn-secondary" data-scroll>
+            <span class="btn-bracket">[</span>
+            OPEN COMMS
+            <span class="btn-bracket">]</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Bottom instrument bar -->
+      <div class="hero-instruments">
+        <div class="inst-block">
+          <span class="inst-label">MISSION</span>
+          <span class="inst-val">CONCIERGE OPS</span>
+        </div>
+        <div class="inst-sep">|</div>
+        <div class="inst-block">
+          <span class="inst-label">DIVISIONS</span>
+          <span class="inst-val">05 ACTIVE</span>
+        </div>
+        <div class="inst-sep">|</div>
+        <div class="inst-block">
+          <span class="inst-label">ALTITUDE</span>
+          <span class="inst-val" id="altVal">FL 420</span>
+        </div>
+        <div class="inst-sep">|</div>
+        <div class="inst-block">
+          <span class="inst-label">VECTOR</span>
+          <span class="inst-val">027° NNE</span>
+        </div>
+        <div class="inst-sep">|</div>
+        <div class="inst-block">
+          <span class="inst-label">STACK</span>
+          <span class="inst-val">HTML · CSS · JS</span>
+        </div>
       </div>
     </div>
 
-    <div class="scroll-indicator">
-      <span class="scroll-label">Scroll</span>
-      <div class="scroll-bar"></div>
+    <!-- Right panel -->
+    <div class="hero-right-panel">
+      <div class="panel-label">// DIVISION MANIFEST</div>
+      <div class="div-manifest">
+        <div class="manifest-row active"><span class="mr-id">▶</span><span class="mr-name">ANU</span><span class="mr-role">OPERATOR</span></div>
+        <div class="manifest-row"><span class="mr-id">■</span><span class="mr-name">SATCORP</span><span class="mr-role">DEV</span></div>
+        <div class="manifest-row"><span class="mr-id">■</span><span class="mr-name">KI-RA</span><span class="mr-role">STUDIO</span></div>
+        <div class="manifest-row"><span class="mr-id">■</span><span class="mr-name">KYRAX</span><span class="mr-role">AI</span></div>
+        <div class="manifest-row"><span class="mr-id">■</span><span class="mr-name">PULSΞ</span><span class="mr-role">BROADCAST</span></div>
+      </div>
+
+      <div class="panel-label" style="margin-top:24px">// SYSTEM LOG</div>
+      <div class="sys-log" id="sysLog">
+        <div class="log-line">BOOT OK</div>
+        <div class="log-line">NET LINK ESTABLISHED</div>
+        <div class="log-line">ANU ONLINE</div>
+        <div class="log-line">AWAITING BRIEF...</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- MARQUEE STRIP -->
+  <div class="data-strip">
+    <div class="data-strip-inner" id="dataStrip">
+      <span>SATCORP // CONCIERGE OPERATOR</span>
+      <span class="ds-sep">◆</span>
+      <span>ANU // OPERATOR ONLINE</span>
+      <span class="ds-sep">◆</span>
+      <span>KI-RA STUDIOS // WORLD-BUILDING</span>
+      <span class="ds-sep">◆</span>
+      <span>KYRAX // AI CONCIERGE</span>
+      <span class="ds-sep">◆</span>
+      <span>PULSΞ // BROADCAST HUB</span>
+      <span class="ds-sep">◆</span>
+      <span>SATCORP.IO // ACCEPTING CLIENTS</span>
+      <span class="ds-sep">◆</span>
+      <span>SATCORP // CONCIERGE OPERATOR</span>
+      <span class="ds-sep">◆</span>
+      <span>ANU // OPERATOR ONLINE</span>
+      <span class="ds-sep">◆</span>
+      <span>KI-RA STUDIOS // WORLD-BUILDING</span>
+      <span class="ds-sep">◆</span>
+      <span>KYRAX // AI CONCIERGE</span>
+      <span class="ds-sep">◆</span>
+      <span>PULSΞ // BROADCAST HUB</span>
+      <span class="ds-sep">◆</span>
+      <span>SATCORP.IO // ACCEPTING CLIENTS</span>
+      <span class="ds-sep">◆</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SERVICES — HUD PANELS
+  ══════════════════════════════════════ -->
+  <section id="pillars" class="section-wrap">
+    <div class="section-hud-header reveal">
+      <div class="shh-left">
+        <span class="shh-num">SYS-02</span>
+        <h2 class="shh-title">SERVICE PILLARS</h2>
+      </div>
+      <div class="shh-line"></div>
+      <div class="shh-right">06 MODULES LOADED</div>
+    </div>
+
+    <div class="pillars-grid">
+
+      <div class="hud-panel reveal" data-index="01">
+        <div class="hp-corner tl"></div><div class="hp-corner tr"></div>
+        <div class="hp-corner bl"></div><div class="hp-corner br"></div>
+        <div class="hp-num">MOD-01</div>
+        <div class="hp-icon">
+          <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="4" width="40" height="40" stroke="currentColor" stroke-width="1"/><rect x="12" y="12" width="10" height="10" fill="currentColor" opacity="0.5"/><rect x="26" y="12" width="10" height="10" stroke="currentColor" stroke-width="1"/><path d="M12 30h24M12 36h16" stroke="currentColor" stroke-width="1"/></svg>
+        </div>
+        <h3 class="hp-name">BRAND &amp; VISUAL SYS</h3>
+        <p class="hp-desc">Full identity systems, wordmark design, color doctrine, typography systems, brand guideline PDFs. Modular. Scalable. Locked.</p>
+        <ul class="hp-specs">
+          <li>LOGO / LOGOTYPE DESIGN</li>
+          <li>BRAND GUIDELINE DOCS</li>
+          <li>SOCIAL / CAMPAIGN ASSETS</li>
+          <li>PRESENTATION DECKS</li>
+          <li>PNG / SVG / AI SOURCE FILES</li>
+        </ul>
+        <div class="hp-status-bar"><div class="hp-status-fill"></div></div>
+      </div>
+
+      <div class="hud-panel reveal delay-1" data-index="02">
+        <div class="hp-corner tl"></div><div class="hp-corner tr"></div>
+        <div class="hp-corner bl"></div><div class="hp-corner br"></div>
+        <div class="hp-num">MOD-02</div>
+        <div class="hp-icon">
+          <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="8" width="40" height="28" stroke="currentColor" stroke-width="1"/><path d="M4 14h40M16 36l-4 4M32 36l4 4M12 40h24" stroke="currentColor" stroke-width="1" opacity="0.6"/><circle cx="24" cy="22" r="4" stroke="currentColor" stroke-width="1"/></svg>
+        </div>
+        <h3 class="hp-name">WEB DESIGN / UI SYS</h3>
+        <p class="hp-desc">Landing pages, dashboards, portals. Dark modes, custom cursors, animations. SEO-ready, performance-tuned. GSAP · Vanta.js · React.</p>
+        <ul class="hp-specs">
+          <li>HTML · CSS · JS</li>
+          <li>RESPONSIVE DESIGN SYSTEMS</li>
+          <li>WEB APP / DASHBOARD UI</li>
+          <li>HOSTING / DEPLOYMENT</li>
+          <li>INTERACTIVE ANIMATIONS</li>
+        </ul>
+        <div class="hp-status-bar"><div class="hp-status-fill"></div></div>
+      </div>
+
+      <div class="hud-panel reveal delay-2" data-index="03">
+        <div class="hp-corner tl"></div><div class="hp-corner tr"></div>
+        <div class="hp-corner bl"></div><div class="hp-corner br"></div>
+        <div class="hp-num">MOD-03</div>
+        <div class="hp-icon">
+          <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="1"/><circle cx="24" cy="24" r="10" stroke="currentColor" stroke-width="1" opacity="0.5"/><circle cx="24" cy="24" r="3" fill="currentColor"/><path d="M24 6v6M24 36v6M6 24h6M36 24h6" stroke="currentColor" stroke-width="1"/></svg>
+        </div>
+        <h3 class="hp-name">SYSTEMS ARCHITECTURE</h3>
+        <p class="hp-desc">Workflow mapping, SOPs, AI pipelines, toolchain optimization. Backend logic, modular frameworks, operational efficiency engineering.</p>
+        <ul class="hp-specs">
+          <li>WORKFLOW MAPPING / SOPs</li>
+          <li>AI PRODUCTION PIPELINES</li>
+          <li>SERVICE ARCHITECTURE</li>
+          <li>SCALABLE BUSINESS SYSTEMS</li>
+          <li>PROCESS DOCUMENTATION</li>
+        </ul>
+        <div class="hp-status-bar"><div class="hp-status-fill"></div></div>
+      </div>
+
+      <div class="hud-panel reveal" data-index="04">
+        <div class="hp-corner tl"></div><div class="hp-corner tr"></div>
+        <div class="hp-corner bl"></div><div class="hp-corner br"></div>
+        <div class="hp-num">MOD-04</div>
+        <div class="hp-icon">
+          <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="12" width="40" height="24" stroke="currentColor" stroke-width="1"/><circle cx="24" cy="24" r="6" stroke="currentColor" stroke-width="1"/><rect x="8" y="16" width="6" height="4" fill="currentColor" opacity="0.4"/><circle cx="40" cy="14" r="2" fill="currentColor"/><path d="M4 20h8M36 20h8" stroke="currentColor" stroke-width="1" opacity="0.4"/></svg>
+        </div>
+        <h3 class="hp-name">STREAMING / BROADCAST</h3>
+        <p class="hp-desc">OBS scene architecture, alert/HUD UI, stream branding packages. TikTok/live broadcast visual kits. Animated overlays. Creator systems.</p>
+        <ul class="hp-specs">
+          <li>OBS SCENE ARCHITECTURE</li>
+          <li>OVERLAY / ALERT DESIGN</li>
+          <li>STREAM BRANDING PACKS</li>
+          <li>TIKTOK / LIVE KITS</li>
+          <li>CREATOR VISUAL SYSTEMS</li>
+        </ul>
+        <div class="hp-status-bar"><div class="hp-status-fill"></div></div>
+      </div>
+
+      <div class="hud-panel reveal delay-1" data-index="05">
+        <div class="hp-corner tl"></div><div class="hp-corner tr"></div>
+        <div class="hp-corner bl"></div><div class="hp-corner br"></div>
+        <div class="hp-num">MOD-05</div>
+        <div class="hp-icon">
+          <svg viewBox="0 0 48 48" fill="none"><path d="M8 40L24 8l16 32" stroke="currentColor" stroke-width="1"/><path d="M14 28h20" stroke="currentColor" stroke-width="1" opacity="0.5"/><circle cx="24" cy="8" r="2" fill="currentColor"/><path d="M24 18v8" stroke="currentColor" stroke-width="1" opacity="0.4"/></svg>
+        </div>
+        <h3 class="hp-name">AI-ENHANCED WORKFLOWS</h3>
+        <p class="hp-desc">Prompt engineering, brand-consistent AI visuals, style-locked pipelines. Custom AI personas. KYRAX operational agents. Automation.</p>
+        <ul class="hp-specs">
+          <li>PROMPT FRAMEWORKS</li>
+          <li>STYLE-LOCKED AI PIPELINES</li>
+          <li>CUSTOM AI PERSONAS</li>
+          <li>OPERATIONAL AGENTS</li>
+          <li>AUTOMATED EXECUTION</li>
+        </ul>
+        <div class="hp-status-bar"><div class="hp-status-fill"></div></div>
+      </div>
+
+      <div class="hud-panel reveal delay-2" data-index="06">
+        <div class="hp-corner tl"></div><div class="hp-corner tr"></div>
+        <div class="hp-corner bl"></div><div class="hp-corner br"></div>
+        <div class="hp-num">MOD-06</div>
+        <div class="hp-icon">
+          <svg viewBox="0 0 48 48" fill="none"><polygon points="24,4 44,14 44,34 24,44 4,34 4,14" stroke="currentColor" stroke-width="1"/><polygon points="24,14 34,19 34,29 24,34 14,29 14,19" stroke="currentColor" stroke-width="1" opacity="0.4"/><circle cx="24" cy="24" r="4" fill="currentColor" opacity="0.7"/></svg>
+        </div>
+        <h3 class="hp-name">GAME DEV / WORLD-BUILD</h3>
+        <p class="hp-desc">Real-time engine workflows. Unity/Unreal/Blender. HUD systems, lore bibles, faction design. Cinematic key art. Ki-Ra Studios.</p>
+        <ul class="hp-specs">
+          <li>BLENDER · UNITY · UNREAL</li>
+          <li>HUD / UI SYSTEMS</li>
+          <li>LORE BIBLES / CANON DOCS</li>
+          <li>CINEMATIC KEY ART</li>
+          <li>ENGINE-READY ASSETS</li>
+        </ul>
+        <div class="hp-status-bar"><div class="hp-status-fill"></div></div>
+      </div>
+
     </div>
   </section>
 
-  <!-- ═══════════ IDENTITY STRIP ═══════════ -->
-  <section class="identity-strip">
-    <div class="strip-inner">
-      <div class="identity-item reveal">
-        <span class="id-num">01</span>
-        <span class="id-label">Clarity → Scope → Execution → Polish</span>
+  <!-- ══════════════════════════════════════
+       DIVISIONS
+  ══════════════════════════════════════ -->
+  <section id="divisions" class="section-wrap">
+    <div class="section-hud-header reveal">
+      <div class="shh-left">
+        <span class="shh-num">SYS-03</span>
+        <h2 class="shh-title">DIVISION MANIFEST</h2>
       </div>
-      <div class="identity-divider"></div>
-      <div class="identity-item reveal delay-1">
-        <span class="id-num">02</span>
-        <span class="id-label">Brand + Systems in One Operator</span>
-      </div>
-      <div class="identity-divider"></div>
-      <div class="identity-item reveal delay-2">
-        <span class="id-num">03</span>
-        <span class="id-label">Hardware-Accelerated. RTX Workflows.</span>
-      </div>
+      <div class="shh-line"></div>
+      <div class="shh-right">05 UNITS ACTIVE</div>
     </div>
-  </section>
 
-  <!-- ═══════════ PILLARS / SERVICES ═══════════ -->
-  <section id="pillars" class="pillars">
-    <div class="container">
-      <div class="section-head reveal">
-        <p class="section-tag">// Core Capabilities</p>
-        <h2 class="section-title">Service <em>Pillars</em></h2>
-        <p class="section-desc">Each pillar is a precision system. Together, they form an end-to-end delivery engine for ambitious clients.</p>
+    <div class="divisions-hud">
+      <div class="div-hud-item reveal" data-div="I">
+        <div class="dhi-id">
+          <span class="dhi-roman">I</span>
+          <span class="dhi-tag">OPERATOR</span>
+        </div>
+        <div class="dhi-bar"></div>
+        <div class="dhi-content">
+          <div class="dhi-header">
+            <span class="dhi-glyph">◈</span>
+            <h3 class="dhi-name">ANU</h3>
+            <span class="dhi-status blink-green">● ONLINE</span>
+          </div>
+          <p class="dhi-role">// CONCIERGE OPERATOR</p>
+          <p class="dhi-desc">The principal operator. ANU is the client-facing concierge layer — intake, scoping, direction-setting, and delivery oversight across all SATCORP engagements.</p>
+        </div>
+        <div class="dhi-specs">
+          <span>INTAKE</span><span>SCOPING</span><span>OVERSIGHT</span>
+        </div>
       </div>
 
-      <div class="pillars-grid">
-
-        <div class="pillar-card reveal" data-index="01">
-          <div class="pillar-num">01</div>
-          <div class="pillar-icon">
-            <svg viewBox="0 0 40 40" fill="none"><rect x="4" y="4" width="32" height="32" stroke="currentColor" stroke-width="1"/><rect x="10" y="10" width="8" height="8" fill="currentColor" opacity="0.4"/><rect x="22" y="10" width="8" height="8" fill="currentColor" opacity="0.2"/><rect x="10" y="22" width="20" height="2" fill="currentColor" opacity="0.6"/><rect x="10" y="27" width="14" height="2" fill="currentColor" opacity="0.3"/></svg>
-          </div>
-          <h3 class="pillar-name">Brand & Visual Systems</h3>
-          <p class="pillar-desc">Full identity systems, wordmark design, color doctrine, typography systems, brand guideline PDFs, and modular design frameworks built to scale.</p>
-          <ul class="pillar-list">
-            <li>Logo & Logotype Design</li>
-            <li>Brand Guideline Docs</li>
-            <li>Social / Campaign Assets</li>
-            <li>Presentation Decks</li>
-          </ul>
-          <div class="pillar-border-anim"></div>
+      <div class="div-hud-item reveal delay-1" data-div="II">
+        <div class="dhi-id">
+          <span class="dhi-roman">II</span>
+          <span class="dhi-tag">DEVELOPER</span>
         </div>
-
-        <div class="pillar-card reveal delay-1" data-index="02">
-          <div class="pillar-num">02</div>
-          <div class="pillar-icon">
-            <svg viewBox="0 0 40 40" fill="none"><rect x="4" y="8" width="32" height="24" stroke="currentColor" stroke-width="1"/><path d="M12 20h6M22 20h6M4 14h32" stroke="currentColor" stroke-width="1" opacity="0.5"/><circle cx="20" cy="20" r="3" fill="currentColor" opacity="0.6"/></svg>
+        <div class="dhi-bar"></div>
+        <div class="dhi-content">
+          <div class="dhi-header">
+            <span class="dhi-glyph">⬡</span>
+            <h3 class="dhi-name">SATCORP</h3>
+            <span class="dhi-status blink-green">● ONLINE</span>
           </div>
-          <h3 class="pillar-name">Web Design & UI Systems</h3>
-          <p class="pillar-desc">Landing pages, portfolios, dashboards, portals. Dark/light modes, animations, custom cursors — performance-tuned and SEO-ready.</p>
-          <ul class="pillar-list">
-            <li>HTML · CSS · JS</li>
-            <li>GSAP · Vanta.js · React</li>
-            <li>Responsive Design Systems</li>
-            <li>Hosting & Deployment Strategy</li>
-          </ul>
-          <div class="pillar-border-anim"></div>
+          <p class="dhi-role">// DEVELOPER BRANCH</p>
+          <p class="dhi-desc">The technical core. Brand systems, web architecture, workflow engineering, and platform-level production. The engine room of the empire.</p>
         </div>
-
-        <div class="pillar-card reveal delay-2" data-index="03">
-          <div class="pillar-num">03</div>
-          <div class="pillar-icon">
-            <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="1"/><path d="M20 6v4M20 30v4M6 20h4M30 20h4" stroke="currentColor" stroke-width="1" opacity="0.5"/><circle cx="20" cy="20" r="5" fill="currentColor" opacity="0.3"/><circle cx="20" cy="20" r="2" fill="currentColor"/></svg>
-          </div>
-          <h3 class="pillar-name">Systems Architecture</h3>
-          <p class="pillar-desc">Workflow mapping, SOPs, AI-assisted pipelines, toolchain optimization. Backend logic, modular frameworks, and operational efficiency planning.</p>
-          <ul class="pillar-list">
-            <li>Workflow Mapping & SOPs</li>
-            <li>AI Production Pipelines</li>
-            <li>Service & Product Architecture</li>
-            <li>Scalable Business Systems</li>
-          </ul>
-          <div class="pillar-border-anim"></div>
-        </div>
-
-        <div class="pillar-card reveal" data-index="04">
-          <div class="pillar-num">04</div>
-          <div class="pillar-icon">
-            <svg viewBox="0 0 40 40" fill="none"><rect x="4" y="10" width="32" height="20" stroke="currentColor" stroke-width="1"/><circle cx="20" cy="20" r="5" stroke="currentColor" stroke-width="1"/><rect x="8" y="14" width="6" height="2" fill="currentColor" opacity="0.4"/><rect x="8" y="18" width="4" height="2" fill="currentColor" opacity="0.3"/><circle cx="33" cy="13" r="2" fill="currentColor" opacity="0.6"/></svg>
-          </div>
-          <h3 class="pillar-name">Streaming & Broadcast</h3>
-          <p class="pillar-desc">OBS scene architecture, alert/HUD UI design, stream branding packages, TikTok/live-broadcast visual kits, animated overlays and scene layouts.</p>
-          <ul class="pillar-list">
-            <li>OBS Scene Architecture</li>
-            <li>Overlay & Alert Design</li>
-            <li>Stream Branding Packages</li>
-            <li>Creator Visual Systems</li>
-          </ul>
-          <div class="pillar-border-anim"></div>
-        </div>
-
-        <div class="pillar-card reveal delay-1" data-index="05">
-          <div class="pillar-num">05</div>
-          <div class="pillar-icon">
-            <svg viewBox="0 0 40 40" fill="none"><path d="M8 32L20 8l12 24" stroke="currentColor" stroke-width="1"/><path d="M12 24h16" stroke="currentColor" stroke-width="1" opacity="0.5"/><circle cx="20" cy="8" r="2" fill="currentColor"/></svg>
-          </div>
-          <h3 class="pillar-name">AI-Enhanced Workflows</h3>
-          <p class="pillar-desc">Prompt engineering, brand-consistent AI visuals, style-locked pipelines, rapid concept iteration, custom AI personas and operational agents.</p>
-          <ul class="pillar-list">
-            <li>Prompt Frameworks</li>
-            <li>Style-Locked AI Pipelines</li>
-            <li>Custom AI Personas / Agents</li>
-            <li>Automated Execution Systems</li>
-          </ul>
-          <div class="pillar-border-anim"></div>
-        </div>
-
-        <div class="pillar-card reveal delay-2" data-index="06">
-          <div class="pillar-num">06</div>
-          <div class="pillar-icon">
-            <svg viewBox="0 0 40 40" fill="none"><polygon points="20,4 36,12 36,28 20,36 4,28 4,12" stroke="currentColor" stroke-width="1"/><polygon points="20,12 28,16 28,24 20,28 12,24 12,16" stroke="currentColor" stroke-width="1" opacity="0.4"/><circle cx="20" cy="20" r="3" fill="currentColor" opacity="0.7"/></svg>
-          </div>
-          <h3 class="pillar-name">Game Dev & World-Building</h3>
-          <p class="pillar-desc">Real-time engine workflows in Unity/Unreal. Asset creation, HUD/UI systems, lore bibles, faction design, cinematic key art. Ki-Ra Studios.</p>
-          <ul class="pillar-list">
-            <li>Blender · Unity · Unreal Engine</li>
-            <li>HUD / UI Systems</li>
-            <li>Lore Bibles & Canon Docs</li>
-            <li>Cinematic / Key Art</li>
-          </ul>
-          <div class="pillar-border-anim"></div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════ DIVISIONS ═══════════ -->
-  <section id="divisions" class="divisions">
-    <div class="container">
-      <div class="section-head reveal">
-        <p class="section-tag">// The Empire</p>
-        <h2 class="section-title">Operating <em>Divisions</em></h2>
-      </div>
-      <div class="divisions-list">
-
-        <div class="division-row reveal" data-scroll>
-          <div class="div-meta">
-            <span class="div-num">I</span>
-            <span class="div-tag">Operator</span>
-          </div>
-          <div class="div-content">
-            <h3 class="div-name">ANU</h3>
-            <p class="div-role">Concierge Operator</p>
-            <p class="div-desc">The principal operator. ANU is the client-facing concierge layer — intake, scoping, direction-setting, and delivery oversight across all SATCORP engagements.</p>
-          </div>
-          <div class="div-glyph">◆</div>
-        </div>
-
-        <div class="division-row reveal delay-1">
-          <div class="div-meta">
-            <span class="div-num">II</span>
-            <span class="div-tag">Developer</span>
-          </div>
-          <div class="div-content">
-            <h3 class="div-name">SATCORP</h3>
-            <p class="div-role">Developer Branch</p>
-            <p class="div-desc">The technical core. Brand systems, web architecture, workflow engineering, and platform-level production. The engine room of the empire.</p>
-          </div>
-          <div class="div-glyph">⬡</div>
-        </div>
-
-        <div class="division-row reveal delay-2">
-          <div class="div-meta">
-            <span class="div-num">III</span>
-            <span class="div-tag">Studio</span>
-          </div>
-          <div class="div-content">
-            <h3 class="div-name">Ki-Ra Studios</h3>
-            <p class="div-role">World-Building & Game Dev</p>
-            <p class="div-desc">The creative universe. Real-time engine development, lore systems, faction design, cinematic visuals, and playable experiences. Built for brand-locked game worlds.</p>
-          </div>
-          <div class="div-glyph">⬟</div>
-        </div>
-
-        <div class="division-row reveal">
-          <div class="div-meta">
-            <span class="div-num">IV</span>
-            <span class="div-tag">AI Agent</span>
-          </div>
-          <div class="div-content">
-            <h3 class="div-name">KYRAX</h3>
-            <p class="div-role">AI Concierge</p>
-            <p class="div-desc">KYRAX is SATCORP's intelligent agent layer — AI-enhanced prompt frameworks, custom persona systems, and automated execution pipelines that extend human intent.</p>
-          </div>
-          <div class="div-glyph">⬢</div>
-        </div>
-
-        <div class="division-row reveal delay-1">
-          <div class="div-meta">
-            <span class="div-num">V</span>
-            <span class="div-tag">Broadcast</span>
-          </div>
-          <div class="div-content">
-            <h3 class="div-name">PULSΞ</h3>
-            <p class="div-role">Broadcast & Creator Hub</p>
-            <p class="div-desc">The signal arm. Stream overlays, broadcast design, creator visual kits, TikTok / live-broadcast systems. Built for operators who need to be seen.</p>
-          </div>
-          <div class="div-glyph">▲</div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════ PROCESS ═══════════ -->
-  <section class="process">
-    <div class="container">
-      <div class="section-head reveal">
-        <p class="section-tag">// How We Work</p>
-        <h2 class="section-title">The <em>Process</em></h2>
-      </div>
-      <div class="process-steps">
-        <div class="process-step reveal">
-          <div class="step-num">01</div>
-          <div class="step-line"></div>
-          <h4 class="step-name">Clarify</h4>
-          <p class="step-desc">Goal definition, constraint mapping, pre-order vetting. We understand before we execute.</p>
-        </div>
-        <div class="process-step reveal delay-1">
-          <div class="step-num">02</div>
-          <div class="step-line"></div>
-          <h4 class="step-name">Scope</h4>
-          <p class="step-desc">Deliverable alignment, timeline setting, revision framework. No ambiguity survives this stage.</p>
-        </div>
-        <div class="process-step reveal delay-2">
-          <div class="step-num">03</div>
-          <div class="step-line"></div>
-          <h4 class="step-name">Execute</h4>
-          <p class="step-desc">Hardware-accelerated production with checkpoints. RTX workflows. Rapid iteration loops.</p>
-        </div>
-        <div class="process-step reveal delay-3">
-          <div class="step-num">04</div>
-          <div class="step-line"></div>
-          <h4 class="step-name">Polish & Deliver</h4>
-          <p class="step-desc">Professional packaging, structured handoff, long-term usability. World-class presentation.</p>
+        <div class="dhi-specs">
+          <span>BRAND</span><span>WEB</span><span>SYSTEMS</span>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ═══════════ THE STANDARD ═══════════ -->
-  <section id="standard" class="standard">
-    <div class="standard-bg"></div>
-    <div class="container">
-      <div class="standard-inner">
-        <div class="standard-left reveal">
-          <p class="section-tag">// Philosophy</p>
-          <h2 class="standard-title">The <em>Standard</em></h2>
-          <p class="standard-quote">"Technology is a force multiplier, not a crutch. AI is not a replacement for thought. Automation is not an excuse for laziness."</p>
-          <div class="standard-sig">— SATCORP Doctrine</div>
+      <div class="div-hud-item reveal delay-2" data-div="III">
+        <div class="dhi-id">
+          <span class="dhi-roman">III</span>
+          <span class="dhi-tag">STUDIO</span>
         </div>
-        <div class="standard-right">
-          <div class="doctrine-item reveal">
-            <div class="doctrine-icon">→</div>
-            <div>
-              <h4>Extend Human Intent</h4>
-              <p>Every tool, every system, every pipeline serves the operator's vision — not the other way around.</p>
-            </div>
+        <div class="dhi-bar"></div>
+        <div class="dhi-content">
+          <div class="dhi-header">
+            <span class="dhi-glyph">⬟</span>
+            <h3 class="dhi-name">KI-RA STUDIOS</h3>
+            <span class="dhi-status blink-green">● ONLINE</span>
           </div>
-          <div class="doctrine-item reveal delay-1">
-            <div class="doctrine-icon">→</div>
-            <div>
-              <h4>Remove Friction</h4>
-              <p>Complexity is our job to absorb. Clarity is what we deliver. The client should feel ease.</p>
-            </div>
-          </div>
-          <div class="doctrine-item reveal delay-2">
-            <div class="doctrine-icon">→</div>
-            <div>
-              <h4>Increase Leverage</h4>
-              <p>Smart systems compound. Each engagement builds infrastructure that performs beyond the project.</p>
-            </div>
-          </div>
-          <div class="doctrine-item reveal delay-3">
-            <div class="doctrine-icon">→</div>
-            <div>
-              <h4>Preserve Focus</h4>
-              <p>We handle the system so you can think. Accountability for outcomes is non-negotiable.</p>
-            </div>
-          </div>
+          <p class="dhi-role">// WORLD-BUILDING / GAME DEV</p>
+          <p class="dhi-desc">The creative universe. Real-time engine development, lore systems, faction design, cinematic visuals, and playable experiences.</p>
+        </div>
+        <div class="dhi-specs">
+          <span>UNITY</span><span>UNREAL</span><span>BLENDER</span>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ═══════════ IDEAL CLIENTS ═══════════ -->
-  <section class="clients-section">
-    <div class="container">
-      <div class="section-head reveal">
-        <p class="section-tag">// Who We Serve</p>
-        <h2 class="section-title">Ideal <em>Clients</em></h2>
-      </div>
-      <div class="clients-grid">
-        <div class="client-card reveal">
-          <div class="client-glyph">◈</div>
-          <h4>Founders &amp; Small Businesses</h4>
-          <p>You have a vision. We build the brand, systems, and infrastructure to match it.</p>
+      <div class="div-hud-item reveal" data-div="IV">
+        <div class="dhi-id">
+          <span class="dhi-roman">IV</span>
+          <span class="dhi-tag">AI AGENT</span>
         </div>
-        <div class="client-card reveal delay-1">
-          <div class="client-glyph">◈</div>
-          <h4>Creators &amp; Streamers</h4>
-          <p>Your presence needs to look like the empire you're building. PULSΞ makes it real.</p>
+        <div class="dhi-bar"></div>
+        <div class="dhi-content">
+          <div class="dhi-header">
+            <span class="dhi-glyph">⬢</span>
+            <h3 class="dhi-name">KYRAX</h3>
+            <span class="dhi-status blink-green">● ONLINE</span>
+          </div>
+          <p class="dhi-role">// AI CONCIERGE</p>
+          <p class="dhi-desc">SATCORP's intelligent agent layer — AI-enhanced prompt frameworks, custom persona systems, and automated execution pipelines.</p>
         </div>
-        <div class="client-card reveal delay-2">
-          <div class="client-glyph">◈</div>
-          <h4>Professional Services</h4>
-          <p>Real estate, consulting, advisory — brands that need to communicate authority and trust.</p>
-        </div>
-        <div class="client-card reveal delay-3">
-          <div class="client-glyph">◈</div>
-          <h4>Long-Term Partners</h4>
-          <p>Brands that understand identity is a long game. We build for consistency, not just campaigns.</p>
+        <div class="dhi-specs">
+          <span>PROMPTS</span><span>AGENTS</span><span>AUTOMATION</span>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ═══════════ CONTACT ═══════════ -->
-  <section id="contact" class="contact">
-    <div class="container">
-      <div class="contact-inner">
-        <div class="contact-left reveal">
-          <p class="section-tag">// Open Engagements</p>
-          <h2 class="contact-title">Begin Your <em>Brief</em></h2>
-          <p class="contact-desc">Select your engagement tier and submit your brief. ANU reviews all intake within 24 hours. Security-first. No unsolicited pitches.</p>
-          <div class="contact-details">
-            <div class="contact-detail-item">
-              <span class="detail-label">Web</span>
-              <span class="detail-val">satcorp.io</span>
-            </div>
-            <div class="contact-detail-item">
-              <span class="detail-label">Status</span>
-              <span class="detail-val status-active">● Accepting Clients</span>
-            </div>
-            <div class="contact-detail-item">
-              <span class="detail-label">Response</span>
-              <span class="detail-val">Within 24 Hours</span>
-            </div>
-          </div>
-          <div class="tiers">
-            <p class="tiers-label">// Engagement Tiers</p>
-            <div class="tier-list">
-              <div class="tier-item">
-                <span class="tier-name">Basic</span>
-                <span class="tier-scope">Single deliverable · Defined scope</span>
-              </div>
-              <div class="tier-item">
-                <span class="tier-name">Standard</span>
-                <span class="tier-scope">Multi-asset · System delivery</span>
-              </div>
-              <div class="tier-item">
-                <span class="tier-name">Premium</span>
-                <span class="tier-scope">Full-service · Concierge access</span>
-              </div>
-            </div>
-          </div>
+      <div class="div-hud-item reveal delay-1" data-div="V">
+        <div class="dhi-id">
+          <span class="dhi-roman">V</span>
+          <span class="dhi-tag">BROADCAST</span>
         </div>
-        <div class="contact-right reveal delay-2">
-          <form class="contact-form" id="contactForm">
-            <div class="form-row">
-              <div class="form-group">
-                <label>Name</label>
-                <input type="text" placeholder="Your name" required />
-              </div>
-              <div class="form-group">
-                <label>Company / Brand</label>
-                <input type="text" placeholder="Company or handle" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Email</label>
-              <input type="email" placeholder="you@domain.com" required />
-            </div>
-            <div class="form-group">
-              <label>Division / Service</label>
-              <select>
-                <option value="">Select a division or service…</option>
-                <option>Brand & Visual Systems — SATCORP</option>
-                <option>Web Design / UI — SATCORP</option>
-                <option>Systems Architecture — SATCORP</option>
-                <option>Streaming & Broadcast — PULSΞ</option>
-                <option>AI-Enhanced Workflows — KYRAX</option>
-                <option>Game Dev / World-Building — Ki-Ra Studios</option>
-                <option>Full Concierge — ANU</option>
-                <option>General Inquiry</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Engagement Tier</label>
-              <div class="tier-select">
-                <label class="tier-radio"><input type="radio" name="tier" value="basic" /><span>Basic</span></label>
-                <label class="tier-radio"><input type="radio" name="tier" value="standard" /><span>Standard</span></label>
-                <label class="tier-radio"><input type="radio" name="tier" value="premium" /><span>Premium</span></label>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Your Brief</label>
-              <textarea placeholder="Describe your project, goals, and any constraints…" rows="5" required></textarea>
-            </div>
-            <button type="submit" class="form-submit">
-              <span class="submit-text">Submit Brief</span>
-              <span class="submit-arrow">→</span>
-            </button>
-          </form>
+        <div class="dhi-bar"></div>
+        <div class="dhi-content">
+          <div class="dhi-header">
+            <span class="dhi-glyph">▲</span>
+            <h3 class="dhi-name">PULSΞ</h3>
+            <span class="dhi-status blink-green">● ONLINE</span>
+          </div>
+          <p class="dhi-role">// BROADCAST + CREATOR HUB</p>
+          <p class="dhi-desc">The signal arm. Stream overlays, broadcast design, creator visual kits, TikTok/live-broadcast systems. Built for operators who need to be seen.</p>
+        </div>
+        <div class="dhi-specs">
+          <span>OBS</span><span>OVERLAYS</span><span>LIVE</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════ FOOTER ═══════════ -->
+  <!-- ══════════════════════════════════════
+       PROCESS
+  ══════════════════════════════════════ -->
+  <section class="section-wrap">
+    <div class="section-hud-header reveal">
+      <div class="shh-left">
+        <span class="shh-num">SYS-04</span>
+        <h2 class="shh-title">MISSION PROTOCOL</h2>
+      </div>
+      <div class="shh-line"></div>
+      <div class="shh-right">04 PHASE SEQUENCE</div>
+    </div>
+    <div class="process-hud">
+      <div class="ph-step reveal">
+        <div class="phs-num">PHASE 01</div>
+        <div class="phs-connector"></div>
+        <div class="phs-content">
+          <h4 class="phs-name">CLARIFY</h4>
+          <p class="phs-desc">Goal definition. Constraint mapping. Pre-order vetting. We understand before we execute.</p>
+        </div>
+      </div>
+      <div class="ph-arrow reveal delay-1">▶▶</div>
+      <div class="ph-step reveal delay-1">
+        <div class="phs-num">PHASE 02</div>
+        <div class="phs-connector"></div>
+        <div class="phs-content">
+          <h4 class="phs-name">SCOPE</h4>
+          <p class="phs-desc">Deliverable alignment. Timeline. Revision framework. No ambiguity survives this phase.</p>
+        </div>
+      </div>
+      <div class="ph-arrow reveal delay-2">▶▶</div>
+      <div class="ph-step reveal delay-2">
+        <div class="phs-num">PHASE 03</div>
+        <div class="phs-connector"></div>
+        <div class="phs-content">
+          <h4 class="phs-name">EXECUTE</h4>
+          <p class="phs-desc">RTX workflows. Hardware-accelerated production with checkpoints. Rapid iteration.</p>
+        </div>
+      </div>
+      <div class="ph-arrow reveal delay-3">▶▶</div>
+      <div class="ph-step reveal delay-3">
+        <div class="phs-num">PHASE 04</div>
+        <div class="phs-connector"></div>
+        <div class="phs-content">
+          <h4 class="phs-name">DELIVER</h4>
+          <p class="phs-desc">Professional packaging. Structured handoff. World-class finish. Long-term usability.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       THE STANDARD / DOCTRINE
+  ══════════════════════════════════════ -->
+  <section id="standard" class="section-wrap doctrine-section">
+    <div class="section-hud-header reveal">
+      <div class="shh-left">
+        <span class="shh-num">SYS-05</span>
+        <h2 class="shh-title">DOCTRINE // THE STANDARD</h2>
+      </div>
+      <div class="shh-line"></div>
+      <div class="shh-right">CLASSIFIED: OPERATOR ONLY</div>
+    </div>
+
+    <div class="doctrine-hud">
+      <div class="doctrine-quote reveal">
+        <div class="dq-bracket">[</div>
+        <div class="dq-text">
+          <p>TECHNOLOGY IS A FORCE MULTIPLIER, NOT A CRUTCH.</p>
+          <p>AI IS NOT A REPLACEMENT FOR THOUGHT.</p>
+          <p>AUTOMATION IS NOT AN EXCUSE FOR LAZINESS.</p>
+        </div>
+        <div class="dq-bracket">]</div>
+      </div>
+      <div class="doctrine-sig reveal delay-1">— SATCORP OPERATIONAL DOCTRINE // VERSION 1.0</div>
+
+      <div class="doctrine-grid">
+        <div class="doc-item reveal">
+          <div class="doc-icon">→</div>
+          <div class="doc-label">EXTEND HUMAN INTENT</div>
+          <p class="doc-text">Every tool, pipeline, and system serves the operator's vision — not the other way around.</p>
+        </div>
+        <div class="doc-item reveal delay-1">
+          <div class="doc-icon">→</div>
+          <div class="doc-label">REMOVE FRICTION</div>
+          <p class="doc-text">Complexity is our job to absorb. Clarity is what we deliver. The client experiences ease.</p>
+        </div>
+        <div class="doc-item reveal delay-2">
+          <div class="doc-icon">→</div>
+          <div class="doc-label">INCREASE LEVERAGE</div>
+          <p class="doc-text">Smart systems compound. Each engagement builds infrastructure that performs beyond the project.</p>
+        </div>
+        <div class="doc-item reveal delay-3">
+          <div class="doc-icon">→</div>
+          <div class="doc-label">PRESERVE FOCUS</div>
+          <p class="doc-text">We handle the system so you can think. Accountability for outcomes is non-negotiable.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       CONTACT — COMMS TERMINAL
+  ══════════════════════════════════════ -->
+  <section id="contact" class="section-wrap">
+    <div class="section-hud-header reveal">
+      <div class="shh-left">
+        <span class="shh-num">SYS-06</span>
+        <h2 class="shh-title">OPEN COMMS // BRIEF INTAKE</h2>
+      </div>
+      <div class="shh-line"></div>
+      <div class="shh-right blink-green">● CHANNEL OPEN</div>
+    </div>
+
+    <div class="contact-hud">
+      <div class="contact-left reveal">
+        <div class="cl-block">
+          <div class="cl-label">// CHANNEL STATUS</div>
+          <div class="cl-row"><span>STATUS</span><span class="blink-green">● ACCEPTING BRIEFS</span></div>
+          <div class="cl-row"><span>RESPONSE</span><span>&lt; 24 HOURS</span></div>
+          <div class="cl-row"><span>ENDPOINT</span><span>satcorp.io</span></div>
+          <div class="cl-row"><span>OPERATOR</span><span>ANU // ONLINE</span></div>
+        </div>
+        <div class="cl-block">
+          <div class="cl-label">// ENGAGEMENT TIERS</div>
+          <div class="tier-hud">
+            <div class="th-row"><span class="th-tier">BASIC</span><span class="th-desc">Single deliverable · Defined scope</span></div>
+            <div class="th-row"><span class="th-tier">STANDARD</span><span class="th-desc">Multi-asset · System delivery</span></div>
+            <div class="th-row th-premium"><span class="th-tier">PREMIUM</span><span class="th-desc">Full-service · Concierge access</span></div>
+          </div>
+        </div>
+        <div class="cl-block">
+          <div class="cl-label">// IDEAL CLIENTS</div>
+          <div class="cl-list">
+            <div>◈ FOUNDERS / SMALL BUSINESSES</div>
+            <div>◈ CREATORS / STREAMERS</div>
+            <div>◈ PROFESSIONAL SERVICES</div>
+            <div>◈ LONG-TERM BRAND PARTNERS</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-right reveal delay-2">
+        <div class="terminal-header">
+          <span>COMMS TERMINAL // BRIEF INTAKE</span>
+          <span class="th-dots"><span></span><span></span><span></span></span>
+        </div>
+        <form class="hud-form" id="contactForm">
+          <div class="hf-row">
+            <div class="hf-group">
+              <label>CALLSIGN (NAME)</label>
+              <input type="text" placeholder="Enter name..." required />
+            </div>
+            <div class="hf-group">
+              <label>UNIT (COMPANY)</label>
+              <input type="text" placeholder="Company / brand..." />
+            </div>
+          </div>
+          <div class="hf-group">
+            <label>COMMS (EMAIL)</label>
+            <input type="email" placeholder="your@email.com" required />
+          </div>
+          <div class="hf-group">
+            <label>TARGET DIVISION</label>
+            <select>
+              <option value="">SELECT DIVISION...</option>
+              <option>BRAND &amp; VISUAL SYSTEMS — SATCORP</option>
+              <option>WEB DESIGN / UI — SATCORP</option>
+              <option>SYSTEMS ARCHITECTURE — SATCORP</option>
+              <option>STREAMING / BROADCAST — PULSΞ</option>
+              <option>AI WORKFLOWS — KYRAX</option>
+              <option>GAME DEV / WORLD-BUILD — KI-RA</option>
+              <option>FULL CONCIERGE — ANU</option>
+              <option>GENERAL INQUIRY</option>
+            </select>
+          </div>
+          <div class="hf-group">
+            <label>ENGAGEMENT TIER</label>
+            <div class="tier-select-hud">
+              <label class="tsh-opt"><input type="radio" name="tier" value="basic"><span>BASIC</span></label>
+              <label class="tsh-opt"><input type="radio" name="tier" value="standard"><span>STANDARD</span></label>
+              <label class="tsh-opt"><input type="radio" name="tier" value="premium"><span>PREMIUM</span></label>
+            </div>
+          </div>
+          <div class="hf-group">
+            <label>MISSION BRIEF</label>
+            <textarea placeholder="Describe your project, goals, constraints..." rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn-hud btn-submit">
+            <span class="btn-bracket">[</span>
+            <span class="submit-text">TRANSMIT BRIEF</span>
+            <span class="btn-bracket">]</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
   <footer class="footer">
     <div class="footer-inner">
-      <div class="footer-logo">
-        <span class="logo-mark">◆</span>
-        <span>SATCORP</span>
+      <div class="footer-brand">
+        <span>◈ SATCORP</span>
+        <span class="fb-sub">CONCIERGE OPERATOR</span>
       </div>
       <div class="footer-copy">
-        <p>© 2025 SATCORP — satcorp.io</p>
-        <p class="footer-sub">New modules and systems are continuously introduced as projects evolve.</p>
+        © 2025 SATCORP // SATCORP.IO // ALL SYSTEMS OPERATIONAL
       </div>
       <nav class="footer-nav">
-        <a href="#pillars" data-scroll>Services</a>
-        <a href="#divisions" data-scroll>Divisions</a>
-        <a href="#standard" data-scroll>Standard</a>
-        <a href="#contact" data-scroll>Contact</a>
+        <a href="#pillars" data-scroll>SERVICES</a>
+        <a href="#divisions" data-scroll>DIVISIONS</a>
+        <a href="#standard" data-scroll>DOCTRINE</a>
+        <a href="#contact" data-scroll>COMMS</a>
       </nav>
+    </div>
+    <div class="footer-bottom-bar">
+      <span>NEW MODULES AND SYSTEMS CONTINUOUSLY DEPLOYED AS PROJECTS EVOLVE</span>
+      <span class="blink-green">● SATCORP ONLINE</span>
     </div>
   </footer>
 
