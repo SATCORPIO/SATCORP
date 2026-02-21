@@ -1,97 +1,125 @@
 /* ═══════════════════════════════════════════
-   SATCORP — Concierge Empire
+   SATCORP — COCKPIT HUD
    script.js
 ═══════════════════════════════════════════ */
 
 'use strict';
 
-/* ───────────────────────────────────────────
-   Custom Cursor
-─────────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   BOOT SEQUENCE
+───────────────────────────────────────── */
+(function bootSequence() {
+  const screen  = document.getElementById('bootScreen');
+  const linesEl = document.getElementById('bootLines');
+  const barEl   = document.getElementById('bootBar');
+  const statEl  = document.getElementById('bootStatus');
+  if (!screen) return;
+
+  const bootMessages = [
+    'SATCORP OS v4.1.0 LOADING...',
+    'CHECKING SYSTEM INTEGRITY...',
+    'PHOSPHOR DISPLAY: ONLINE',
+    'RADAR SUBSYSTEM: ONLINE',
+    'COMMS MODULE: ONLINE',
+    'ANU // OPERATOR: ONLINE',
+    'KYRAX // AI AGENT: ONLINE',
+    'PULSΞ // BROADCAST: ONLINE',
+    'KI-RA // STUDIO: ONLINE',
+    'SATCORP BRANCH: ONLINE',
+    'ALL DIVISIONS NOMINAL',
+    'CONCIERGE PROTOCOL: ACTIVE',
+    'AWAITING OPERATOR INPUT...',
+  ];
+
+  let msgIdx = 0;
+  let progress = 0;
+
+  const msgInterval = setInterval(() => {
+    if (msgIdx >= bootMessages.length) {
+      clearInterval(msgInterval);
+      statEl.textContent = 'SYSTEM READY // ENGAGING';
+      setTimeout(() => {
+        screen.classList.add('done');
+        setTimeout(() => { screen.style.display = 'none'; }, 700);
+      }, 400);
+      return;
+    }
+    const line = document.createElement('div');
+    line.textContent = '> ' + bootMessages[msgIdx];
+    linesEl.appendChild(line);
+    linesEl.scrollTop = linesEl.scrollHeight;
+    msgIdx++;
+    progress = Math.min(100, Math.round((msgIdx / bootMessages.length) * 100));
+    barEl.style.width = progress + '%';
+    statEl.textContent = 'LOADING... ' + progress + '%';
+  }, 140);
+})();
+
+
+/* ─────────────────────────────────────────
+   CUSTOM HUD CURSOR
+───────────────────────────────────────── */
 (function initCursor() {
   const cursor = document.getElementById('cursor');
-  const trail  = document.getElementById('cursorTrail');
-  if (!cursor || !trail) return;
+  if (!cursor) return;
 
-  let mx = 0, my = 0;
-  let tx = 0, ty = 0;
-  let rafId;
+  let cx = -100, cy = -100;
 
   document.addEventListener('mousemove', e => {
-    mx = e.clientX;
-    my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top  = my + 'px';
+    cx = e.clientX; cy = e.clientY;
+    cursor.style.left = cx + 'px';
+    cursor.style.top  = cy + 'px';
   });
 
-  function animateTrail() {
-    tx += (mx - tx) * 0.14;
-    ty += (my - ty) * 0.14;
-    trail.style.left = tx + 'px';
-    trail.style.top  = ty + 'px';
-    rafId = requestAnimationFrame(animateTrail);
-  }
-  animateTrail();
+  document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; });
+  document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; });
 
-  const hoverEls = document.querySelectorAll(
-    'a, button, .pillar-card, .division-row, .client-card, .tier-radio, input, select, textarea'
-  );
-  hoverEls.forEach(el => {
+  const hoverTargets = 'a, button, .hud-panel, .div-hud-item, .tsh-opt, input, select, textarea, .manifest-row';
+  document.querySelectorAll(hoverTargets).forEach(el => {
     el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
     el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
   });
-
-  document.addEventListener('mouseleave', () => {
-    cursor.style.opacity = '0';
-    trail.style.opacity  = '0';
-  });
-  document.addEventListener('mouseenter', () => {
-    cursor.style.opacity = '1';
-    trail.style.opacity  = '1';
-  });
 })();
 
 
-/* ───────────────────────────────────────────
-   Nav — scroll state + mobile toggle
-─────────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   NAV — SCROLL STATE + MOBILE TOGGLE
+───────────────────────────────────────── */
 (function initNav() {
-  const nav       = document.getElementById('nav');
-  const toggle    = document.getElementById('navToggle');
-  const navLinks  = document.getElementById('navLinks');
-  if (!nav) return;
+  const nav    = document.getElementById('nav');
+  const toggle = document.getElementById('navToggle');
+  const mobile = document.getElementById('navMobile');
 
-  // Scroll state
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 40) {
-      nav.classList.add('scrolled');
-    } else {
-      nav.classList.remove('scrolled');
-    }
-  }, { passive: true });
-
-  // Force on init
-  if (window.scrollY > 40) nav.classList.add('scrolled');
-
-  // Mobile toggle
-  if (toggle && navLinks) {
-    toggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-      const spans = toggle.querySelectorAll('span');
-      spans.forEach(s => s.style.opacity = navLinks.classList.contains('open') ? '0.5' : '1');
-    });
-
-    // Close on link click
-    navLinks.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => navLinks.classList.remove('open'));
+  if (toggle && mobile) {
+    toggle.addEventListener('click', () => mobile.classList.toggle('open'));
+    mobile.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => mobile.classList.remove('open'));
     });
   }
 })();
 
 
-/* ───────────────────────────────────────────
-   Smooth scroll for data-scroll links
-─────────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   LIVE CLOCK
+───────────────────────────────────────── */
+(function initClock() {
+  const el = document.getElementById('navTime');
+  if (!el) return;
+  function tick() {
+    const now = new Date();
+    const hh  = String(now.getHours()).padStart(2, '0');
+    const mm  = String(now.getMinutes()).padStart(2, '0');
+    const ss  = String(now.getSeconds()).padStart(2, '0');
+    el.textContent = hh + ':' + mm + ':' + ss;
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+
+
+/* ─────────────────────────────────────────
+   SMOOTH SCROLL
+───────────────────────────────────────── */
 (function initSmoothScroll() {
   document.querySelectorAll('[data-scroll]').forEach(el => {
     el.addEventListener('click', e => {
@@ -100,187 +128,226 @@
       const target = document.querySelector(href);
       if (!target) return;
       e.preventDefault();
-      const offset = 72;
-      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      const top = target.getBoundingClientRect().top + window.scrollY - 68;
       window.scrollTo({ top, behavior: 'smooth' });
     });
   });
 })();
 
 
-/* ───────────────────────────────────────────
-   Reveal on scroll (IntersectionObserver)
-─────────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   SCROLL REVEAL
+───────────────────────────────────────── */
 (function initReveal() {
   const els = document.querySelectorAll('.reveal');
   if (!els.length) return;
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
       }
     });
-  }, {
-    threshold: 0.12,
-    rootMargin: '0px 0px -40px 0px'
-  });
+  }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
 
-  els.forEach(el => observer.observe(el));
+  els.forEach(el => obs.observe(el));
 })();
 
 
-/* ───────────────────────────────────────────
-   Contact Form
-─────────────────────────────────────────── */
-(function initContactForm() {
+/* ─────────────────────────────────────────
+   ALTITUDE COUNTER (hero readout)
+───────────────────────────────────────── */
+(function initAltCounter() {
+  const el = document.getElementById('altVal');
+  if (!el) return;
+  setInterval(() => {
+    const base = 420;
+    const drift = Math.floor((Math.random() - 0.5) * 10);
+    el.textContent = 'FL ' + (base + drift);
+  }, 2000);
+})();
+
+
+/* ─────────────────────────────────────────
+   SYSTEM LOG — auto-append messages
+───────────────────────────────────────── */
+(function initSysLog() {
+  const log = document.getElementById('sysLog');
+  if (!log) return;
+
+  const messages = [
+    'CLIENT BRIEF OPEN...',
+    'SCANNING FOR TARGETS...',
+    'ANU MONITORING...',
+    'VECTOR LOCKED',
+    'SYSTEMS NOMINAL',
+    'RADAR SWEEP ACTIVE',
+    'COMMS CHANNEL OPEN',
+    'INCOMING SIGNAL...',
+    'SATCORP STANDING BY',
+    'EMPIRE OPERATIONAL',
+  ];
+
+  let idx = 0;
+  setInterval(() => {
+    const line = document.createElement('div');
+    line.className = 'log-line';
+    line.textContent = messages[idx % messages.length];
+    log.appendChild(line);
+    if (log.children.length > 8) log.removeChild(log.children[0]);
+    log.scrollTop = log.scrollHeight;
+    idx++;
+  }, 3000);
+})();
+
+
+/* ─────────────────────────────────────────
+   DIVISION MANIFEST — cycle active
+───────────────────────────────────────── */
+(function initManifestCycle() {
+  const rows = document.querySelectorAll('.manifest-row');
+  if (!rows.length) return;
+  let activeIdx = 0;
+
+  setInterval(() => {
+    rows[activeIdx].classList.remove('active');
+    activeIdx = (activeIdx + 1) % rows.length;
+    rows[activeIdx].classList.add('active');
+  }, 2500);
+})();
+
+
+/* ─────────────────────────────────────────
+   PILLAR STATUS BAR ANIMATION ON REVEAL
+───────────────────────────────────────── */
+(function initStatusBars() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.hud-panel').forEach(p => obs.observe(p));
+})();
+
+
+/* ─────────────────────────────────────────
+   GLITCH EFFECT on hero title (occasional)
+───────────────────────────────────────── */
+(function initGlitch() {
+  const title = document.querySelector('.hero-title');
+  if (!title) return;
+
+  function glitch() {
+    title.style.textShadow = '2px 0 rgba(0,255,65,0.8), -2px 0 rgba(255,59,0,0.4)';
+    title.style.transform  = 'translateX(2px)';
+    setTimeout(() => {
+      title.style.textShadow = '';
+      title.style.transform  = 'translateX(-1px)';
+      setTimeout(() => {
+        title.style.textShadow = '';
+        title.style.transform  = '';
+      }, 60);
+    }, 80);
+  }
+
+  // Random glitch every 5–12s
+  function scheduleGlitch() {
+    const delay = 5000 + Math.random() * 7000;
+    setTimeout(() => { glitch(); scheduleGlitch(); }, delay);
+  }
+  scheduleGlitch();
+})();
+
+
+/* ─────────────────────────────────────────
+   DATA STRIP — pause on hover
+───────────────────────────────────────── */
+(function initStrip() {
+  const strip = document.querySelector('.data-strip');
+  const track = document.getElementById('dataStrip');
+  if (!strip || !track) return;
+  strip.addEventListener('mouseenter', () => track.style.animationPlayState = 'paused');
+  strip.addEventListener('mouseleave', () => track.style.animationPlayState = 'running');
+})();
+
+
+/* ─────────────────────────────────────────
+   CONTACT FORM
+───────────────────────────────────────── */
+(function initForm() {
   const form = document.getElementById('contactForm');
   if (!form) return;
 
   form.addEventListener('submit', e => {
     e.preventDefault();
-
-    const btn  = form.querySelector('.form-submit');
+    const btn  = form.querySelector('.btn-submit');
     const text = btn.querySelector('.submit-text');
-    const arrow = btn.querySelector('.submit-arrow');
 
     btn.disabled = true;
-    text.textContent = 'Received.';
-    arrow.textContent = '✓';
-    btn.style.background = '#4caf7d';
-    btn.style.color = '#fff';
+    btn.style.background = '#00cc33';
+    text.textContent = 'TRANSMISSION CONFIRMED';
+
+    // Add log entry
+    const log = document.getElementById('sysLog');
+    if (log) {
+      const line = document.createElement('div');
+      line.className = 'log-line';
+      line.style.color = 'var(--green-hot)';
+      line.textContent = 'BRIEF RECEIVED // ANU NOTIFIED';
+      log.appendChild(line);
+      if (log.children.length > 8) log.removeChild(log.children[0]);
+    }
 
     setTimeout(() => {
       btn.disabled = false;
-      text.textContent = 'Submit Brief';
-      arrow.textContent = '→';
       btn.style.background = '';
-      btn.style.color = '';
+      text.textContent = 'TRANSMIT BRIEF';
       form.reset();
-    }, 3500);
+    }, 4000);
   });
 })();
 
 
-/* ───────────────────────────────────────────
-   Parallax – hero background grid
-─────────────────────────────────────────── */
-(function initParallax() {
-  const grid = document.querySelector('.hero-grid');
-  if (!grid) return;
-
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    grid.style.transform = `translateY(${y * 0.15}px)`;
-  }, { passive: true });
-})();
-
-
-/* ───────────────────────────────────────────
-   Stat counter animation (hero numbers if any)
-─────────────────────────────────────────── */
-(function initCounters() {
-  // If you add stat numbers later with data-count, they'll animate
-  const counters = document.querySelectorAll('[data-count]');
-  if (!counters.length) return;
-
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const el    = entry.target;
-      const target = parseInt(el.dataset.count, 10);
-      const suffix = el.dataset.suffix || '';
-      let current  = 0;
-      const step   = Math.ceil(target / 60);
-      const timer  = setInterval(() => {
-        current += step;
-        if (current >= target) {
-          current = target;
-          clearInterval(timer);
-        }
-        el.textContent = current + suffix;
-      }, 16);
-      observer.unobserve(el);
-    });
-  }, { threshold: 0.5 });
-
-  counters.forEach(el => observer.observe(el));
-})();
-
-
-/* ───────────────────────────────────────────
-   Pillar card — tilt micro-interaction
-─────────────────────────────────────────── */
-(function initTilt() {
-  const cards = document.querySelectorAll('.pillar-card');
-  const MAX_TILT = 3; // degrees
-
-  cards.forEach(card => {
-    card.addEventListener('mousemove', e => {
-      const rect   = card.getBoundingClientRect();
-      const cx     = rect.left + rect.width  / 2;
-      const cy     = rect.top  + rect.height / 2;
-      const dx     = (e.clientX - cx) / (rect.width  / 2);
-      const dy     = (e.clientY - cy) / (rect.height / 2);
-      const rotX   = -dy * MAX_TILT;
-      const rotY   =  dx * MAX_TILT;
-      card.style.transform = `perspective(600px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-    });
-
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
+/* ─────────────────────────────────────────
+   HUD PANELS — scan line effect on hover
+───────────────────────────────────────── */
+(function initPanelScan() {
+  document.querySelectorAll('.hud-panel').forEach(panel => {
+    let scanEl = null;
+    panel.addEventListener('mouseenter', () => {
+      scanEl = document.createElement('div');
+      scanEl.style.cssText = `
+        position: absolute; left: 0; right: 0; height: 1px;
+        background: rgba(0,255,65,0.4);
+        top: 0; pointer-events: none; z-index: 10;
+        box-shadow: 0 0 8px rgba(0,255,65,0.6);
+        animation: panelScan 0.6s linear forwards;
+      `;
+      if (!document.getElementById('panelScanKF')) {
+        const style = document.createElement('style');
+        style.id = 'panelScanKF';
+        style.textContent = '@keyframes panelScan { from { top: 0 } to { top: 100% } }';
+        document.head.appendChild(style);
+      }
+      panel.style.position = 'relative';
+      panel.appendChild(scanEl);
+      setTimeout(() => { if (scanEl && scanEl.parentNode) scanEl.parentNode.removeChild(scanEl); }, 700);
     });
   });
 })();
 
 
-/* ───────────────────────────────────────────
-   Division rows — stagger on enter
-─────────────────────────────────────────── */
-(function initDivisionHover() {
-  const rows = document.querySelectorAll('.division-row');
-  rows.forEach((row, i) => {
-    row.addEventListener('mouseenter', () => {
-      rows.forEach((r, j) => {
-        if (r !== row) {
-          r.style.opacity = '0.45';
-        }
-      });
-    });
-    row.addEventListener('mouseleave', () => {
-      rows.forEach(r => { r.style.opacity = ''; });
-    });
-  });
-})();
-
-
-/* ───────────────────────────────────────────
-   Marquee — pause on hover
-─────────────────────────────────────────── */
-(function initMarquee() {
-  const track = document.querySelector('.marquee-track');
-  if (!track) return;
-  const hero  = document.querySelector('.hero-marquee');
-  if (!hero)  return;
-
-  hero.addEventListener('mouseenter', () => {
-    track.style.animationPlayState = 'paused';
-  });
-  hero.addEventListener('mouseleave', () => {
-    track.style.animationPlayState = 'running';
-  });
-})();
-
-
-/* ───────────────────────────────────────────
-   Page init
-─────────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   PAGE INIT
+───────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
-  // Trigger visible for above-fold reveals
-  requestAnimationFrame(() => {
-    document.querySelectorAll('.hero .reveal').forEach(el => {
-      el.classList.add('visible');
-    });
-  });
+  // Hero reveals fire after boot
+  setTimeout(() => {
+    document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('visible'));
+  }, 2200);
 });
